@@ -47,5 +47,5 @@ jobs:
           commit-message: merge main back to develop
           title: Merge main to develop
           body: Merge main back to develop
-          base: main
-          branch: develop
+          base: develop
+          branch: main
