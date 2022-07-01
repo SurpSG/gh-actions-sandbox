@@ -32,6 +32,12 @@ gradlePlugin {
     }
 }
 
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}
+
 diffCoverageReport {
     diffSource.git.compareWith project.properties['diffBase'] ?: 'refs/remotes/origin/main'
 }
