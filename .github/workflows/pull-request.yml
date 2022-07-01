@@ -30,6 +30,9 @@ jobs:
           name: tests-artifacts
           path: tests-artifacts
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: Run diff coverage check
         continue-on-error: ${{ contains(github.event.pull_request.labels.*.name, 'ignore-diff-coverage') }}
         run: ./gradlew diffCoverage -Pgithub -PdiffBase="refs/remotes/origin/$GITHUB_BASE_REF"
