@@ -44,10 +44,9 @@ jobs:
         run: ./gradlew publishPlugins -Pgradle.publish.key=${{ secrets.GRADLE_PUBLISH_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_PUBLISH_SECRET }} --dry-run
 
       - name: Create PR main to develop
-        uses: peter-evans/create-pull-request@v4
+        uses: repo-sync/pull-request@v2
         with:
-          commit-message: merge main back to develop
-          title: Merge main to develop
-          body: Merge main back to develop
-          base: develop
-          branch: main
+          source_branch: 'main'
+          destination_branch: 'develop'
+          pr_title: 'Merge main to develop'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
