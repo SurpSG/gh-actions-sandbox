@@ -1,2 +1,11 @@
 rootProject.name = 'gh-actions-sandbox'
 
+buildscript {
+    repositories {
+        maven { url 'https://jitpack.io' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.form-com.diff-coverage-gradle:diff-coverage:0.9.4'
+    }
+}
