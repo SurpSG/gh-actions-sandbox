@@ -1,4 +1,4 @@
-name: Main branch
+name: Release plugin
 
 on:
   create:
@@ -7,11 +7,7 @@ on:
 
 jobs:
 
-  check-main:
-    uses: ./.github/workflows/base-ci.yml
-
   create-release:
-    needs: check-main
     runs-on: ubuntu-latest
     steps:
 
@@ -20,6 +16,9 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+
+      - name: Build artifacts
+        run: ./gradlew assemble
 
       - name: Get version
         id: release_version
