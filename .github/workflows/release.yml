@@ -1,21 +1,29 @@
 name: Release plugin
 
 on:
-  create:
+  push:
     tags:
-      - '*'
+      - '^[0-9]+\.[0-9]+\.[0-9]+$'
 
 jobs:
 
   create-release:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: main
 
-      - name: Clone project
-        uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Build project
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assemble
 
       - name: Build artifacts
         run: ./gradlew assemble
@@ -26,20 +34,20 @@ jobs:
           echo ::set-output name=version::$(grep 'version=' gradle.properties | cut -d '=' -f 2)
 
       - name: Create Github release
-        uses: marvinpinto/action-automatic-releases@latest
+        uses: actions/create-release@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: ${{ steps.release_version.outputs.version }}
-          prerelease: true
-          title: "Release ${{ steps.release_version.outputs.version }}"
+          tag_name: ${{ github.ref }}
+          name: Release ${{ env.VERSION }}
+          draft: true
 
-      - name: Publish plugin
-        run: ./gradlew publishPlugins -Pgradle.publish.key=${{ secrets.GRADLE_PUBLISH_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_PUBLISH_SECRET }} --dry-run
 
-      - name: Create PR main to develop
-        uses: repo-sync/pull-request@v2
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3.10.0
         with:
-          source_branch: 'main'
-          destination_branch: 'develop'
-          pr_title: 'Merge main to develop'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'Merge main into develop'
+          title: 'Merge main into develop'
+          branch: develop
+          body: 'This is an automated pull request created by the release process.'
