@@ -27,21 +27,21 @@ jobs:
       - name: Get version
         id: release_version
         run: |
-          echo ::set-output name=version::$(grep 'version=' gradle.properties | cut -d '=' -f 2)
+          echo ::set-output name=version::$(echo ${{ github.ref }} | cut -d '/' -f 3)
 
       - name: debug step
         run: |
           echo "github.ref=${{ github.ref }}"
           echo "version=${{ steps.release_version.outputs.version }}"
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3.10.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'Merge main into develop'
-          title: 'Merge main into develop'
-          branch: develop
-          body: 'This is an automated pull request created by the release process.'
+#      - name: Create Pull Request
+#        uses: peter-evans/create-pull-request@v3.10.0
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#          commit-message: 'Merge main into develop'
+#          title: 'Merge main into develop'
+#          branch: develop
+#          body: 'This is an automated pull request created by the release process.'
 
 
       - name: Create Github release
