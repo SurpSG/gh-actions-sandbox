@@ -2,25 +2,13 @@ name: Release plugin
 
 on:
   workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
-        type: choice
-        options:
-          - info
-          - warning
-          - debug
 
 jobs:
 
   create-release:
     runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "Log level: $LEVEL"
 
+    steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
@@ -39,17 +27,17 @@ jobs:
         id: release_version
         run: |
           echo ::set-output name=version::$(grep 'version=' gradle.properties | cut -d '=' -f 2)
-          echo "Obtained version from gradle.properties: '${{ steps.release_version.outputs.version }}'"
 
       - name: Adding tag ${{ steps.release_version.outputs.version }}
         uses: rickstaa/action-create-tag@v1
         with:
           tag: "${{ steps.release_version.outputs.version }}"
           tag_exists_error: true
-          message: "Latest release"
+          message: "Release ${{ steps.release_version.outputs.version }}"
 
       - name: Create PR main to develop
         uses: repo-sync/pull-request@v2
+        continue-on-error: true
         with:
           source_branch: 'main'
           destination_branch: 'develop'
@@ -61,6 +49,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ env.VERSION }}
+          tag_name: "${{ steps.release_version.outputs.version }}"
+          release_name: "Release ${{ steps.release_version.outputs.version }}"
           draft: true
