@@ -29,15 +29,10 @@ jobs:
         run: |
           echo ::set-output name=version::$(grep 'version=' gradle.properties | cut -d '=' -f 2)
 
-      - name: Create Github release
-        uses: actions/create-release@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          name: Release ${{ env.VERSION }}
-          draft: true
-
+      - name: debug step
+        run: |
+          echo "github.ref=${{ github.ref }}"
+          echo "version=${{ steps.release_version.outputs.version }}"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3.10.0
@@ -47,3 +42,13 @@ jobs:
           title: 'Merge main into develop'
           branch: develop
           body: 'This is an automated pull request created by the release process.'
+
+
+      - name: Create Github release
+        uses: actions/create-release@v1.1.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ env.VERSION }}
+          draft: true
