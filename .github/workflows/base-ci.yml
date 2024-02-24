@@ -8,32 +8,59 @@ jobs:
   build-and-check:
     runs-on: ubuntu-latest
 
+    env:
+      gradle_cmd: "./gradlew --parallel --console=plain --no-watch-fs -s "
+      is_pull_request: github.event_name == 'pull_request'
+
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
         with:
-          java-version: 1.8
+          distribution: 'temurin'
+          java-version: '11'
+          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Build & Test
-        run: ./gradlew check jacocoTestReport --parallel
+        run: |
+          echo "name=${{ github.event_name }} is PR: ${{ env.is_pull_request }}"
+#          ${gradle_cmd} check :koverXmlReport --rerun -m
 
-      - name: Upload JaCoCo coverage data
-        uses: actions/upload-artifact@master
+
+      - name: Add test results to PR
+        uses: EnricoMi/publish-unit-test-result-action@v2.7.0
+        if: ${{ env.is_pull_request }}
+        continue-on-error: true
         with:
-          name: tests-artifacts
-          path: |
-            build/jacoco
-            build/test-results
+          files:
+            '**/tests-artifacts/**/test-results/**/*.xml'
+
+#      - name: Run Delta Coverage check
+#        if: ${{ env.is_pull_request }}
+#        continue-on-error: ${{ contains(github.event.pull_request.labels.*.name, 'suppress-delta-coverage') }}
+#        run: ${gradle_cmd} deltaCoverage -PdiffBase="refs/remotes/origin/$GITHUB_BASE_REF" -x test -x functionalTest
+
+      - name: Add Delta Coverage report to PR
+        id: coverage-in-PR
+        uses: madrapps/jacoco-report@v1.6.1
+        if: ${{ env.is_pull_request }}
+        continue-on-error: true
+        with:
+          paths:
+            'build/reports/coverage-reports/delta-coverage/report.xml'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: build/reports/jacoco/test/jacocoTestReport.xml
+          file: build/reports/kover/report.xml
