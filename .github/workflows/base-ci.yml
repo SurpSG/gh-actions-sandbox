@@ -33,6 +33,7 @@ jobs:
       - name: Build & Test
         run: |
           echo "name=${{ github.event_name }} is PR: ${{ github.event_name == 'pull_request' }}"
+          echo "GITHUB_BASE_REF=refs/remotes/origin/$GITHUB_BASE_REF"
 #          ${gradle_cmd} check :koverXmlReport --rerun -m
 
 
