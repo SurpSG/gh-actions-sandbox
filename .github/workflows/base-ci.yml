@@ -23,34 +23,35 @@ jobs:
         run: |
           echo "name=${{ github.event_name }} is PR: ${{ github.event_name == 'pull_request' }}"
           echo "GITHUB_BASE_REF=refs/remotes/origin/$GITHUB_BASE_REF"
+           ${gradle_cmd} --version
 #          ${gradle_cmd} check :koverXmlReport --rerun -m
-
-
-      - name: Add test results to PR
-        uses: EnricoMi/publish-unit-test-result-action@v2.7.0
-        if: ${{ github.event_name == 'pull_request' }}
-        continue-on-error: true
-        with:
-          files:
-            '**/tests-artifacts/**/test-results/**/*.xml'
-
+#
+#
+#      - name: Add test results to PR
+#        uses: EnricoMi/publish-unit-test-result-action@v2.7.0
+#        if: ${{ github.event_name == 'pull_request' }}
+#        continue-on-error: true
+#        with:
+#          files:
+#            '**/tests-artifacts/**/test-results/**/*.xml'
+#
 #      - name: Run Delta Coverage check
 #        if: ${{ env.is_pull_request }}
 #        continue-on-error: ${{ contains(github.event.pull_request.labels.*.name, 'suppress-delta-coverage') }}
 #        run: ${gradle_cmd} deltaCoverage -PdiffBase="refs/remotes/origin/$GITHUB_BASE_REF" -x test -x functionalTest
-
-      - name: Add Delta Coverage report to PR
-        id: coverage-in-PR
-        uses: madrapps/jacoco-report@v1.6.1
-        if: ${{ github.event_name == 'pull_request' }}
-        continue-on-error: true
-        with:
-          paths:
-            'build/reports/coverage-reports/delta-coverage/report.xml'
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: build/reports/kover/report.xml
+#
+#      - name: Add Delta Coverage report to PR
+#        id: coverage-in-PR
+#        uses: madrapps/jacoco-report@v1.6.1
+#        if: ${{ github.event_name == 'pull_request' }}
+#        continue-on-error: true
+#        with:
+#          paths:
+#            'build/reports/coverage-reports/delta-coverage/report.xml'
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3
+#        with:
+#          token: ${{ secrets.CODECOV_TOKEN }}
+#          file: build/reports/kover/report.xml
