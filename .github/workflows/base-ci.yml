@@ -12,6 +12,10 @@ jobs:
       is_pull_request: github.event_name == 'pull_request'
 
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Gradle Project Setup
         uses: ./.github/workflows/setup-java-project-ci.yml
 
