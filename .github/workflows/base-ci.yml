@@ -12,12 +12,11 @@ jobs:
       is_pull_request: github.event_name == 'pull_request'
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Gradle Project Setup
         uses: SurpSG/gh-composite-action/basic-setup-gradle@v2.1
+        with:
+          java-version: 11
 
       - name: Build & Test
         run: |
