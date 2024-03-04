@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
 
       - name: Gradle Project Setup
-        uses: SurpSG/gh-composite-action/basic-setup-gradle@v2.0
+        uses: SurpSG/gh-composite-action/basic-setup-gradle@v2.1
 
       - name: Build & Test
         run: |
