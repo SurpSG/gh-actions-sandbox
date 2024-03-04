@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
 
       - name: Gradle Project Setup
-        uses: ./.github/workflows/setup-java-project-ci.yml
+        uses: SurpSG/gh-composite-action@v1
 
       - name: Build & Test
         run: |
