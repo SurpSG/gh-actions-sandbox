@@ -16,7 +16,7 @@ jobs:
       - name: Gradle Project Setup
         uses: SurpSG/gh-composite-action/basic-setup-gradle@v2.2
         with:
-          java-version: 11
+          java-version: 17
 
       - name: Build & Test
         run: |
