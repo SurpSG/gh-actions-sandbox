@@ -20,7 +20,7 @@ jobs:
       - name: Gradle Project Setup
         uses: ./.github/basic-setup-gradle
         with:
-          java-version: 17
+          java-version: 21
 
       - name: Build & Test
         run: |
