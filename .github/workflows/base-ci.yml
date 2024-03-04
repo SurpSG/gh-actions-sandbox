@@ -14,7 +14,7 @@ jobs:
     steps:
 
       - name: Gradle Project Setup
-        uses: .github/basic-setup-gradle
+        uses: ./.github/basic-setup-gradle
         with:
           java-version: 17
 
