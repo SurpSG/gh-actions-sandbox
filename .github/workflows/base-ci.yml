@@ -6,14 +6,14 @@ on:
 jobs:
 
   build-and-check:
-    uses: ./.github/workflows/setup-java-project-ci.yml
-
+    runs-on: ubuntu-latest
     env:
       gradle_cmd: "./gradlew --parallel --console=plain --no-watch-fs -s "
       is_pull_request: github.event_name == 'pull_request'
 
     steps:
-
+      - name: Gradle Project Setup
+        uses: ./.github/workflows/setup-java-project-ci.yml
 
       - name: Build & Test
         run: |

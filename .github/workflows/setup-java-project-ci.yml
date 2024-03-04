@@ -1,27 +1,21 @@
-name: basic-steps
+name: "Basic Gradle Project Setup"
 
-on:
-  workflow_call:
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
-jobs:
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+        cache: gradle
 
-  build-and-check:
-    runs-on: ubuntu-latest
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
 
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '11'
-          cache: gradle
-
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
