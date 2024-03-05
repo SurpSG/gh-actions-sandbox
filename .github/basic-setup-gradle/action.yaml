@@ -12,7 +12,7 @@ runs:
 
     - name: Vars
       shell: bash
-      run: echo "GITHUB_RUN_ID=${{ env.GITHUB_RUN_ID }} var2=${{ GITHUB_RUN_ID }} "
+      run: echo "GITHUB_RUN_ID=${{ env.GITHUB_RUN_ID }}"
 
     - name: Vars2
       shell: bash
