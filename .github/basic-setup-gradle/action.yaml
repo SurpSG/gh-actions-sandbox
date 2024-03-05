@@ -13,7 +13,7 @@ runs:
     - name: Vars
       shell: bash
       run: |
-        echo 'GITHUB_RUN_ID=${{ vars.GITHUB_RUN_ID }}'
+        echo 'GITHUB_RUN_ID=${{ GITHUB_RUN_ID }}'
 
     - uses: actions/cache@v4
 #      post-if: false
