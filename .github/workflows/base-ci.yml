@@ -17,6 +17,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Vars
+        shell: bash
+        run: |
+          echo 'GITHUB_RUN_ID=${{ vars.GITHUB_RUN_ID }}'
+
       - name: Gradle Project Setup
         uses: ./.github/basic-setup-gradle
         with:
