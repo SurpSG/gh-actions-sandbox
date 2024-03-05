@@ -20,7 +20,7 @@ jobs:
       - name: Vars
         shell: bash
         run: |
-          echo 'GITHUB_RUN_ID=${{ vars.GITHUB_RUN_ID }}'
+          echo 'GITHUB_RUN_ID=${{ env.GITHUB_RUN_ID }}'
 
       - name: Gradle Project Setup
         uses: ./.github/basic-setup-gradle
