@@ -23,5 +23,5 @@ jobs:
           unknown-command arg
 
       - name: Test condition
-        if: ${{ github.event_name == 'pull_request' }} && ( success() || failure() )
+        if: ${{ github.event_name != 'pull_request' }} && ( success() || failure() )
         run: echo "This is a pull request"
