@@ -17,11 +17,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Vars
-        shell: bash
-        run: |
-          unknown-command arg
-
       - name: Test condition
-        if: ${{ github.event_name != 'pull_request'  && ( success() || failure() ) }}
-        run: echo "This is a pull request"
+        run: ls -la .
+          ../
+          && pwd
