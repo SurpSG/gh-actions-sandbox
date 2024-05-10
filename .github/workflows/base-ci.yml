@@ -1,4 +1,4 @@
-name: basic-steps
+name: basic-steps-1
 
 on:
   workflow_call:
