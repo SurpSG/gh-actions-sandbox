@@ -17,9 +17,9 @@ jobs:
         id: artifacts
         run: |
           echo 'github.ref: ${{ github.ref }}'
-          echo 'is master github.ref: ${{ github.ref == 'refs/heads/master' }}'
+          echo 'is master github.ref: ${{ github.ref == 'refs/heads/main' }}'
           echo 'is feature github.ref: ${{ startsWith(github.ref, 'refs/heads/feature/') }}'
-          echo 'check result: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/feature/') }}'
+          echo 'check result: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/feature/') }}'
           artifacts_publish_enabled="${{ 
             ( github.event_name == 'push' 
                 && ( github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/feature/') ) 
