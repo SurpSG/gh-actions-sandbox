@@ -18,12 +18,12 @@ jobs:
         run: |
           echo 'github.ref: ${{ github.ref }}'
           echo 'is master github.ref: ${{ github.ref == 'refs/heads/main' }}'
-          echo 'is feature github.ref: ${{ startsWith(github.ref, 'refs/heads/feature/') }}'
+          echo 'is feature github.ref: ${{ startsWith(github.ref, 'refs/heads/release/') }}'
           echo 'github.event_name: ${{ github.event_name }}, isPush: ${{ github.event_name == 'push'  }}'
-          echo 'check result: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/feature/') }}'
+          echo 'check result: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/') }}'
           artifacts_publish_enabled="${{ 
             ( github.event_name == 'push' 
-                && ( github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/feature/') ) 
+                && ( github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/') ) 
             )
                 || contains(github.event.pull_request.labels.*.name, 'publish-artifacts') 
           }}"
