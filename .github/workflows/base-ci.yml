@@ -19,6 +19,7 @@ jobs:
           echo 'github.ref: ${{ github.ref }}'
           echo 'is master github.ref: ${{ github.ref == 'refs/heads/main' }}'
           echo 'is feature github.ref: ${{ startsWith(github.ref, 'refs/heads/feature/') }}'
+          echo 'github.event_name: ${{ github.event_name }}, isPush: ${{ github.event_name == 'push'  }}'
           echo 'check result: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/feature/') }}'
           artifacts_publish_enabled="${{ 
             ( github.event_name == 'push' 
