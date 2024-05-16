@@ -13,19 +13,13 @@ jobs:
 
     steps:
 
-      - name: Artifacts Publish Enabled
-        id: artifacts
+      - uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21.x'
+
+      - name: Install dependencies
         run: |
-          echo 'github.ref: ${{ github.ref }}'
-          echo 'is master github.ref: ${{ github.ref == 'refs/heads/main' }}'
-          echo 'is feature github.ref: ${{ startsWith(github.ref, 'refs/heads/release/') }}'
-          echo 'github.event_name: ${{ github.event_name }}, isPush: ${{ github.event_name == 'push'  }}'
-          echo 'check result: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/') }}'
-          artifacts_publish_enabled="${{ 
-            ( github.event_name == 'push' 
-                && ( github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/') ) 
-            )
-                || contains(github.event.pull_request.labels.*.name, 'publish-artifacts') 
-          }}"
-          echo "artifacts_publish_enabled=$artifacts_publish_enabled"
-          echo "artifacts_publish_enabled=$artifacts_publish_enabled" >> "$GITHUB_OUTPUT"
+          go run test.go
