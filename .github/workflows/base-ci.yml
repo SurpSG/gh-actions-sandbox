@@ -16,6 +16,7 @@ jobs:
       - name: Artifacts Publish Enabled
         id: artifacts
         run: |
+          echo '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
           echo 'github.ref: ${{ github.ref }}'
           echo 'is master github.ref: ${{ github.ref == 'refs/heads/main' }}'
           echo 'is feature github.ref: ${{ startsWith(github.ref, 'refs/heads/feature/') }}'
