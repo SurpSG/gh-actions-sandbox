@@ -34,5 +34,5 @@ jobs:
   failure:
     runs-on: ubuntu-latest
     steps:
-      - name: oops
-        run: ls /azaz
+      - run: echo "event name is:" ${{ github.event_name }}
+      - run: echo "event type is:" ${{ github.event.action }}
