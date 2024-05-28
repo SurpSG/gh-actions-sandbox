@@ -23,5 +23,5 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v3
         with:
-          event-type: my-event
+          event-type: synchronize
           client-payload: '{"github": ${{ toJson(github) }}}'
