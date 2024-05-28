@@ -31,7 +31,7 @@ jobs:
           echo "artifacts_publish_enabled=$artifacts_publish_enabled"
           echo "artifacts_publish_enabled=$artifacts_publish_enabled" >> "$GITHUB_OUTPUT"
 
-  failure:
+  not-failure:
     runs-on: ubuntu-latest
     steps:
       - run: echo "event name is:" ${{ github.event_name }}
