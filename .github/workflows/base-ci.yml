@@ -2,7 +2,7 @@ name: basic-steps-1
 
 on:
   workflow_call:
-
+# ssss
 jobs:
 
   build-and-check:
@@ -16,6 +16,7 @@ jobs:
       - name: Artifacts Publish Enabled
         id: artifacts
         run: |
+          echo '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
           echo 'github.ref: ${{ github.ref }}'
           echo 'is master github.ref: ${{ github.ref == 'refs/heads/main' }}'
           echo 'is feature github.ref: ${{ startsWith(github.ref, 'refs/heads/feature/') }}'
@@ -29,3 +30,9 @@ jobs:
           }}"
           echo "artifacts_publish_enabled=$artifacts_publish_enabled"
           echo "artifacts_publish_enabled=$artifacts_publish_enabled" >> "$GITHUB_OUTPUT"
+
+  failure:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "event name is:" ${{ github.event_name }}
+      - run: echo "event type is:" ${{ github.event.action }}

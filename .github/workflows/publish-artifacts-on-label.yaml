@@ -1,0 +1,27 @@
+name: Publish
+
+on:
+  pull_request:
+    types: [ labeled ]
+    branches:
+      - '*'
+
+concurrency:
+  group: '${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+
+  publish-on-label:
+    if: ${{ github.event.label.name == 'publish-artifacts' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Aza
+        run: ls .
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: synchronize
+          client-payload: '{"github": ${{ toJson(github) }}}'
