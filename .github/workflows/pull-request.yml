@@ -29,8 +29,9 @@ jobs:
   event-data:
     if:
       ${{
-      github.event_name != 'pull_request' ||
-      (github.event.action == 'labeled' && github.event.label.name == 'publish-artifacts')
+      github.event_name != 'pull_request' || 
+        github.event.action != 'labeled' ||
+        (github.event.action == 'labeled' && github.event.label.name == 'publish-artifacts')
       }}
     runs-on: ubuntu-latest
     steps:
