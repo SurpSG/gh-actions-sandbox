@@ -30,3 +30,9 @@ jobs:
           }}"
           echo "artifacts_publish_enabled=$artifacts_publish_enabled"
           echo "artifacts_publish_enabled=$artifacts_publish_enabled" >> "$GITHUB_OUTPUT"
+
+  failure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: oops
+        run: ls /azaza
