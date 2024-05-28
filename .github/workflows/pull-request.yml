@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - '*'
+  repository_dispatch:
+    types: [ publish-artifacts ]
 
 jobs:
 
