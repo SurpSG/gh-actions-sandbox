@@ -17,6 +17,15 @@ on:
 
 jobs:
 
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
+          echo "event name is:" ${{ github.event_name }}
+          echo "event type is:" ${{ github.event.action }}
+
+
   event-data:
     if:
       ${{
@@ -26,9 +35,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
-          echo "event name is:" ${{ github.event_name }}
-          echo "event type is:" ${{ github.event.action }}
+          echo 'aaaaaaaaaaaaaaaaaaaaaaaaa'
+
 
   build-and-test:
     if: false
