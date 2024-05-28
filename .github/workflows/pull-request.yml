@@ -2,23 +2,36 @@ name: Pull Request
 
 on:
   pull_request:
+    types: [
+      opened,
+      synchronize,
+      reopened,
+      labeled,
+    ]
     branches:
       - '*'
-  repository_dispatch:
-    types: [ publish-artifacts,  my-event ]
+  push:
+    branches:
+      - 'master'
+      - 'release/**'
 
 jobs:
 
-
   event-data:
+    if:
+      ${{
+      github.event_name != 'pull_request' ||
+      (github.event.action == 'labeled' && github.event.label.name == 'publish-artifacts')
+      }}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
-      - run: echo "event name is:" ${{ github.event_name }}
-      - run: echo "event type is:" ${{ github.event.action }}
-      - run: echo ${{ github.event.client_payload.sha }}
+      - run: |
+          echo "${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
+          echo "event name is:" ${{ github.event_name }}
+          echo "event type is:" ${{ github.event.action }}
 
   build-and-test:
+    if: false
     uses: ./.github/workflows/base-ci.yml
     permissions:
       contents: read
