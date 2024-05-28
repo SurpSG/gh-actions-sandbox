@@ -19,5 +19,11 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v3
         with:
-          event-type: publish-artifacts
+          event-type: publish-artifacts-11
           client-payload: '{"github": ${{ toJson(github) }}}'
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: my-event
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
