@@ -6,10 +6,6 @@ on:
     branches:
       - '*'
 
-concurrency:
-  group: '${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
-  cancel-in-progress: true
-
 jobs:
 
   publish-on-label:
@@ -23,5 +19,11 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v3
         with:
-          event-type: synchronize
+          event-type: publish-artifacts-11
           client-payload: '{"github": ${{ toJson(github) }}}'
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: my-event
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
