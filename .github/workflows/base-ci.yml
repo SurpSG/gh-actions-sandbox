@@ -34,7 +34,7 @@ jobs:
               return `${comments[0].id}`
             } else {
               console.log('Comment not FOUND')
-              return
+              return false
             }
 
       - name: ress
@@ -43,7 +43,7 @@ jobs:
 
       - name: update
         uses: actions/github-script@v6
-        if: ${{ steps.find-comment.outputs.result != '' }}
+        if: ${{ steps.find-comment.outputs.result }}
         with:
           script: |
             var comm = github.rest.issues.updateComment({
