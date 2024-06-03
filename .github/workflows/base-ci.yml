@@ -47,7 +47,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             }).then(response =>
-              const comment = response.data.find(it => it.body.startsWith('Image Tag:'))
+              var comment = response.data.find(it => it.body.startsWith('Image Tag:'))
               if (comment) {
                 return comment.id
               }
