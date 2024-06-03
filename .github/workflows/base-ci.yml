@@ -19,7 +19,7 @@ jobs:
 
       - name: find
         uses: actions/github-script@v6
-        id: find-comment
+        id: working-find-comment
         with:
           script: |
             var comm = github.rest.issues.listComments({
@@ -36,6 +36,26 @@ jobs:
               console.log('Comment not FOUND')
               return
             }
+
+      - name: find
+        uses: actions/github-script@v6
+        id: find-comment
+        with:
+          script: |
+            await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            }).then(response => 
+              var comments = a.data.filter(it => it.body.startsWith('Image Tag:'));
+              if (comments.length > 0) {
+                console.log(`FOUND COMMENT: ${comments[0].id} ${comments[0].body}`);
+                return comments[0].id;
+              } else {
+                console.log('Comment not FOUND');
+                return
+              }
+            )
 
       - name: print res
         run: |
