@@ -34,12 +34,16 @@ jobs:
               return `${comments[0].id}`
             } else {
               console.log('Comment not FOUND')
-              return ''
+              return
             }
+
+      - name: ress
+        run: |
+          echo 'result `${{ steps.find-comment.outputs.result }}`' 
 
       - name: update
         uses: actions/github-script@v6
-        if: ${{ steps.find-comment.outputs.result }}
+        if: ${{ steps.find-comment.outputs.result != '' }}
         with:
           script: |
             var comm = github.rest.issues.updateComment({
