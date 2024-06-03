@@ -22,7 +22,14 @@ runs:
     - uses: actions/github-script@v7
       id: my-script
       with:
+        result-encoding: string
         script: |
-          `${{ inputs.docker-files }}`.split('\n')
-            .map(it => `_${it}_;`)
-            .forEach(it => console.log(it));
+          return `${{ inputs.docker-files }}`.split('\n')
+            .filter(it => it)
+            .map(it => `-f ${it}`)
+            .join(' ');
+
+    - name: print
+      run: |
+        echo 'docker compose ${{steps.my-script.outputs.result}} up -d'
+        
