@@ -17,7 +17,7 @@ runs:
         result-encoding: string
         script: |
           var dockerFiles = `${{ inputs.docker-files }}`
-          if (!(dockerFiles)) {
+          if (!(dockerFiles.trim())) {
               throw "'inputs.docker-files' is empty."
           }
           return dockerFiles.split('\n')
