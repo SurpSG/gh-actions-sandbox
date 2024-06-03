@@ -23,4 +23,4 @@ runs:
       id: my-script
       with:
         script: |
-          console.log("${{ inputs.docker-files }}");
+          console.log('${{ join(inputs.docker-files, '') }}');
