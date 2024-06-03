@@ -30,8 +30,10 @@ jobs:
             var a = await comm
             var comments = a.data.filter(it => it.body.startsWith('Image Tag:'))
             if (comments.length > 0) {
-              return comments[0].id
+              console.log(`FOUND COMMENT: ${comments[0].id} ${comments[0].body}`)
+              return `${comments[0].id}`
             } else {
+              console.log('Comment not FOUND')
               return ''
             }
 
