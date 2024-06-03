@@ -24,8 +24,5 @@ runs:
       with:
         script: |
           console.log('azazaza-1');
-          dockerFiles = '${{ inputs.docker-files }}'.split(/\r?\n/)
-              .map(it => it.trim())
-              .map(it => `-f ${it}`)
-              .join(' ');
+          var dockerFiles = '${{ inputs.docker-files }}';
           console.log(dockerFiles);
