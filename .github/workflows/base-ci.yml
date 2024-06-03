@@ -58,7 +58,7 @@ jobs:
 
       - name: create
         uses: actions/github-script@v6
-        if: ${{ steps.find-comment.outputs.result == '' }}
+        if: ${{ !steps.find-comment.outputs.result }}
         with:
           script: |
             var comm = github.rest.issues.createComment({
