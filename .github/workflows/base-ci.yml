@@ -48,28 +48,10 @@ jobs:
               repo: context.repo.repo,
             })
             var comment = response.data.find(it => it.body.startsWith('Image Tag:'))
-            console.log(`Actual: ${comment}`);
             if (comment) {
               console.log(`FOUND COMMENT: ${comment.id} ${comment.id}`);
               return comment.id
-            } else {
-              console.log('Comment not FOUND');
-              return
             }
-            var comments = response.data.filter(it => it.body.startsWith('Image Tag:'));
-            if (comments.length > 0) {
-              console.log(`FOUND COMMENT: ${comments[0].id} ${comments[0].body}`);
-              return comments[0].id;
-            } else {
-              console.log('Comment not FOUND');
-              return
-            }
-
-      - name: print res
-        run: |
-          echo 'res=${{ steps.find-comment.outputs.result }}' 
-          echo 'res is empty=${{ steps.find-comment.outputs.result == '' }}' 
-          echo 'res is not empty=${{ steps.find-comment.outputs.result != '' }}' 
 
       - name: update
         uses: actions/github-script@v6
