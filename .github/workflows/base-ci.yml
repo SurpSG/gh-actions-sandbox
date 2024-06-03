@@ -17,17 +17,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            var comm = github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '👋 Thanks for reporting 2'
-            });
-            var res = await comm;
-            console.log(res)
+#      - uses: actions/github-script@v6
+#        with:
+#          script: |
+#            var comm = github.rest.issues.createComment({
+#              issue_number: context.issue.number,
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              body: '👋 Thanks for reporting 2'
+#            });
+#            var res = await comm;
+#            console.log(res)
 
       - uses: actions/github-script@v6
         with:
@@ -37,7 +37,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            var res = await comm;
+            var res = JSON.parse(await comm).body;
             console.log(res)
 
 
