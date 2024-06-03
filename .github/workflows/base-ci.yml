@@ -48,7 +48,9 @@ jobs:
               repo: context.repo.repo,
             }).then(response => {
               var comment = response.data.find(it => it.body.startsWith('Image Tag:'))
+              console.log(`Actual: ${comment}`);
               if (comment) {
+                console.log(`FOUND COMMENT: ${comment}`);
                 return comment.id
               }
               var comments = response.data.filter(it => it.body.startsWith('Image Tag:'));
