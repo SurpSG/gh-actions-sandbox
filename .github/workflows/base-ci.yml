@@ -46,15 +46,12 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-            }).then(response => 
-              var comments = a.data.filter(it => it.body.startsWith('Image Tag:'));
-              if (comments.length > 0) {
-                console.log(`FOUND COMMENT: ${comments[0].id} ${comments[0].body}`);
-                return comments[0].id;
-              } else {
-                console.log('Comment not FOUND');
-                return
+            }).then(response =>
+              const comment = response.data.find(it => it.body.startsWith('Image Tag:'))
+              if (comment) {
+                return comment.id
               }
+              
             )
 
       - name: print res
