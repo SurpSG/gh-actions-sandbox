@@ -37,9 +37,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            var aa = await comm
-            console.log(`aaa: ${aa}`)
-            var a = JSON.parse(aa)
+            var a = await comm
             console.log(`a: ${a}`)
             var res = a.data;
             console.log(`res: ${res}`)
