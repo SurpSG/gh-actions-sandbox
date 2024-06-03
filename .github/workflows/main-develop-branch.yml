@@ -19,11 +19,5 @@ jobs:
       - name: Clone project
         uses: actions/checkout@v3
 
-      - uses: actions/github-script@v7
-        id: my-script
-        with:
-          result-encoding: string
-          script: console.log('azazaza')
-
       - name: validate test
         uses: ./.github/validation
