@@ -23,6 +23,4 @@ runs:
       id: my-script
       with:
         script: |
-          console.log('azazaza-1');
-          var dockerFiles = '${{ inputs.docker-files }}';
-          console.log(dockerFiles);
+          console.log('${{ inputs.docker-files }}');
