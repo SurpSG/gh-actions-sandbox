@@ -37,7 +37,12 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            var res = JSON.parse(await comm).data;
+            var aa = await comm
+            console.log(`aaa: ${aa}`)
+            var a = JSON.parse(aa)
+            console.log(`a: ${a}`)
+            var res = a.data;
+            console.log(`res: ${res}`)
             var comments = res.filter(it => it.body.startsWith('👋 Thanks for'))
             if (comments.length > 0) {
               console.log(`Comments id: ${comments[0].id}`)
