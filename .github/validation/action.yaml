@@ -23,6 +23,6 @@ runs:
       id: my-script
       with:
         script: |
-          aa.split(`${{ inputs.docker-files }}`, '\n')
+          `${{ inputs.docker-files }}`.split('\n')
             .map(it => `_${it}_;`)
             .forEach(it => console.log(it));
