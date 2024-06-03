@@ -37,8 +37,11 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            var res = JSON.parse(await comm).body;
-            console.log(res)
+            var res = JSON.parse(await comm).data;
+            var comments = res.filter(it => it.body.startsWith('👋 Thanks for'))
+            if (comments.length > 0) {
+              console.log(`Comments id: ${comments[0].id}`)
+            }
 
 
 #      - name: Set up JDK 11
