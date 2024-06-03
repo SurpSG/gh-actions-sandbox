@@ -1,0 +1,32 @@
+name: Script check
+
+inputs:
+  docker-files:
+    description: 'An ordered list of docker-compose.yaml files'
+    default: |
+      docker-compose-1
+      docker-compose-2
+
+
+runs:
+  using: "composite"
+
+  steps:
+
+    - name: inputs echo
+      shell: bash
+      continue-on-error: true
+      run: |
+        echo 'files ${{ inputs.docker-files }}'
+
+    - uses: actions/github-script@v7
+      id: my-script
+      with:
+        script: |
+          console.log('azazaza-1');
+          dockerFiles = '${{ inputs.docker-files }}'.split(/\r?\n/)
+              .map(it => it.trim())
+              .join(it )
+              .map(it => '-f ${it}')
+              .join(' ')
+          console.log(dockerFiles)

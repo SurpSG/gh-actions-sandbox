@@ -25,3 +25,5 @@ jobs:
           result-encoding: string
           script: console.log('azazaza')
 
+      - name: validate test
+        uses: ./.github/validation
