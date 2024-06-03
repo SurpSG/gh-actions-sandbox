@@ -20,12 +20,13 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            github.rest.issues.createComment({
+            var comm = github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: '👋 Thanks for reporting!'
-            })
+            });
+            console.log(comm)
 
 #      - name: Set up JDK 11
 #        uses: actions/setup-java@v3
