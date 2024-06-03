@@ -17,19 +17,20 @@ jobs:
         with:
           fetch-depth: 0
 
-#      - uses: actions/github-script@v6
-#        with:
-#          script: |
-#            var comm = github.rest.issues.createComment({
-#              issue_number: context.issue.number,
-#              owner: context.repo.owner,
-#              repo: context.repo.repo,
-#              body: '👋 Thanks for reporting 2'
-#            });
-#            var res = await comm;
-#            console.log(res)
+      - name: precreated
+        uses: actions/github-script@v6
+        with:
+          script: |
+            var comm = github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Image Tag: ${Date()}`
+            });
 
-      - uses: actions/github-script@v6
+      - name: find
+        uses: actions/github-script@v6
+        id: find-comment
         with:
           script: |
             var comm = github.rest.issues.listComments({
@@ -38,14 +39,37 @@ jobs:
               repo: context.repo.repo,
             });
             var a = await comm
-            console.log(`a: ${a}`)
-            var res = a.data;
-            console.log(`res: ${res}`)
-            var comments = res.filter(it => it.body.startsWith('👋 Thanks for'))
+            var comments = a.data.filter(it => it.body.startsWith('Image Tag:'))
             if (comments.length > 0) {
-              console.log(`Comments id: ${comments[0].id}`)
+              return comments[0].id
+            } else {
+              return ''
             }
 
+      - name: update
+        uses: actions/github-script@v6
+        if: ${{ steps.find-comment.outputs.result }}
+        with:
+          script: |
+            var comm = github.rest.issues.updateComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ steps.find-comment.outputs.result }},
+              body: `Image Tag: ${Date()} [updated]`
+            });
+
+      - name: create
+        uses: actions/github-script@v6
+        if: ${{ !steps.find-comment.outputs.result }}
+        with:
+          script: |
+            var comm = github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Image Tag: [created] ${Date()}`
+            });     
 
 #      - name: Set up JDK 11
 #        uses: actions/setup-java@v3
