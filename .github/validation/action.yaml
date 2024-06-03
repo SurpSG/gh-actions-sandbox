@@ -3,7 +3,9 @@ name: Script check
 inputs:
   docker-files:
     description: 'An ordered list of docker-compose.yaml files'
-
+    default: |
+      docker-compose-1
+      docker-compose-2
 
 
 runs:
