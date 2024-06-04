@@ -27,8 +27,11 @@ jobs:
             .addCodeBlock('aza', "js")
             
             summaryBuffer.write() // write to summary
-            
-            return summaryBuffer.stringify() // generate text
+            var res = summaryBuffer.stringify()
+            console.log('----------')
+            console.log(res)
+            console.log('----------')
+            return res // generate text
             
 
       - name: find
