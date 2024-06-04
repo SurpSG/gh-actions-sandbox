@@ -48,7 +48,7 @@ jobs:
               repo: context.repo.repo,
             })
             var comment = response.data.find(it => 
-              it.body.includes(${{ steps.comment-marker.outputs.result }})
+              it.body.includes('${{ steps.comment-marker.outputs.result }}')
             )
             if (comment) {
               console.log(`FOUND COMMENT: ${comment.id} ${comment.id}`);
