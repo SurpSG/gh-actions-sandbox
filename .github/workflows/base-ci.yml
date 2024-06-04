@@ -19,7 +19,7 @@ jobs:
 
       - id: comment-marker
         shell: bash
-        run: echo 'result=${{ format('<!-- marker={0},{1} -->') }}' >> $GITHUB_STEP_SUMMARY
+        run: echo 'result=${{ format('<!-- marker={0},{1} -->', 'title', 'body') }}' >> $GITHUB_STEP_SUMMARY
 
       - id: message
         uses: actions/github-script@v6
