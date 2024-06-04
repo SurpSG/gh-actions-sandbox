@@ -24,7 +24,7 @@ jobs:
             var summaryBuffer = core.summary
             .addHeading('Title')
             .addRaw('additional msg')
-            .addCodeBlock('aza', "js")
+            .addCodeBlock('aza')
             
             summaryBuffer.write() // write to summary
             var res = summaryBuffer.stringify()
@@ -60,7 +60,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: ${{ steps.find-comment.outputs.result }},
-              body: `${{ steps.message.outputs.result }}`
+              body: ${{ steps.message.outputs.result }}
             });
 
       - name: create
@@ -68,10 +68,13 @@ jobs:
         if: ${{ !steps.find-comment.outputs.result }}
         with:
           script: |
+            console.log('---------------------')
+            console.log(${{ steps.message.outputs.result }})
+            console.log('---------------------')
             var comm = github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `${{ steps.message.outputs.result }}`
+              body: ${{ steps.message.outputs.result }}
             });     
 
