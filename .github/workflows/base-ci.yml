@@ -17,6 +17,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - id: comment-marker
+        shell: bash
+        run: echo 'result=${{ format('<!-- marker={0},{1} -->') }}' >> $GITHUB_STEP_SUMMARY
+
       - id: message
         uses: actions/github-script@v6
         with:
@@ -25,13 +29,11 @@ jobs:
             .addHeading('Title')
             .addRaw('additional msg')
             .addCodeBlock('aza')
+            .addRaw(${{ steps.comment-marker.outputs.result }})
             
             summaryBuffer.write() // write to summary
-            var res = summaryBuffer.stringify()
-            console.log('----------')
-            console.log(res)
-            console.log('----------')
-            return res // generate text
+            
+            return summaryBuffer.stringify() // generate text
             
 
       - name: find
@@ -44,7 +46,9 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-            var comment = response.data.find(it => it.body.startsWith('Image Tag:'))
+            var comment = response.data.find(it => 
+              it.body.includes(${{ steps.comment-marker.outputs.result }})
+            )
             if (comment) {
               console.log(`FOUND COMMENT: ${comment.id} ${comment.id}`);
               return comment.id
@@ -68,9 +72,6 @@ jobs:
         if: ${{ !steps.find-comment.outputs.result }}
         with:
           script: |
-            console.log('---------------------')
-            console.log(${{ steps.message.outputs.result }})
-            console.log('---------------------')
             var comm = github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
