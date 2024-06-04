@@ -18,9 +18,10 @@ jobs:
           fetch-depth: 0
 
       - uses: actions/github-script@v6
+        id: message
         with:
           script: |
-            await core.summary
+            var summaryBuffer = core.summary
             .addHeading('Test Results')
             .addCodeBlock('aza', "js")
             .addTable([
@@ -30,7 +31,10 @@ jobs:
               ['test.js', 'Pass ✅']
             ])
             .addLink('View staging deployment!', 'https://github.com')
-            .write()
+            
+            summaryBuffer.write() // write to summary
+            
+            return summaryBuffer.stringify() // generate text
             
 
       - name: find
@@ -59,7 +63,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: ${{ steps.find-comment.outputs.result }},
-              body: `Image Tag: [updated] ${Date()}`
+              body: `${{ steps.message.outputs.result }}`
             });
 
       - name: create
@@ -71,7 +75,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `Image Tag: [created] ${Date()}`
+              body: `${{ steps.message.outputs.result }}`
             });     
 
 #      - name: Set up JDK 11
