@@ -20,7 +20,6 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            import * as core from '@actions/core' 
             await core.summary
             .addHeading('Test Results')
             .addCodeBlock('aza', "js")
