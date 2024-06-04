@@ -17,25 +17,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: find
-        uses: actions/github-script@v6
-        id: working-find-comment
+      - uses: actions/github-script@v6
         with:
           script: |
-            var comm = github.rest.issues.listComments({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            });
-            var a = await comm
-            var comments = a.data.filter(it => it.body.startsWith('Image Tag:'))
-            if (comments.length > 0) {
-              console.log(`FOUND COMMENT: ${comments[0].id} ${comments[0].body}`)
-              return comments[0].id
-            } else {
-              console.log('Comment not FOUND')
-              return
-            }
+            import * as core from '@actions/core' 
+            await core.summary
+            .addHeading('Test Results')
+            .addCodeBlock('aza', "js")
+            .addTable([
+              [{data: 'File', header: true}, {data: 'Result', header: true}],
+              ['foo.js', 'Pass ✅'],
+              ['bar.js', 'Fail ❌'],
+              ['test.js', 'Pass ✅']
+            ])
+            .addLink('View staging deployment!', 'https://github.com')
+            .write()
+            
 
       - name: find
         uses: actions/github-script@v6
