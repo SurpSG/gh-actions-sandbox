@@ -29,7 +29,8 @@ jobs:
         run: sleep 5 && echo 1
 
   job-final:
-    if: ${{ always() }}
+    needs:
+      - *
     runs-on: ubuntu-latest
     steps:
       - name: step
