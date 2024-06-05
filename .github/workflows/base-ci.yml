@@ -30,7 +30,7 @@ jobs:
 
   job-final:
     needs:
-      - *
+      - '*'
     runs-on: ubuntu-latest
     steps:
       - name: step
