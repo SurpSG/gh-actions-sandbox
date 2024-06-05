@@ -40,7 +40,7 @@ jobs:
             const summaryBuffer = core.summary
             .addHeading('Title')
             .addRaw('additional msg')
-            .addCodeBlock('aza')
+            .addCodeBlock('aaaaaaaaaaaaaaa aza')
             .addRaw('${{ steps.comment-marker.outputs.result }}')
             
             summaryBuffer.write() // write to summary
