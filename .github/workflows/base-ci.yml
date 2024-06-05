@@ -9,28 +9,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: step
-        run: echo 1
+        run: sleep 5 && echo 1
   job2:
     runs-on: ubuntu-latest
     steps:
       - name: step
-        run: echo 1
+        run: sleep 5 && echo 1
 
   job3:
     runs-on: ubuntu-latest
     steps:
       - name: step
-        run: echo 1
+        run: sleep 5 && echo 1
 
   job4:
     runs-on: ubuntu-latest
     steps:
       - name: step
-        run: echo 1
+        run: sleep 5 && echo 1
 
   job-final:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
       - name: step
-        run: echo 1
+        run: sleep 5 && echo 1
