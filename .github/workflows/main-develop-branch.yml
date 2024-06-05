@@ -12,12 +12,35 @@ jobs:
 
 #  check-main:
 #    uses: ./.github/workflows/base-ci.yml
-  create-release:
+  job1:
     runs-on: ubuntu-latest
     steps:
+      - name: step
+        run: echo 1
 
-      - name: Clone project
-        uses: actions/checkout@v3
+#      - name: validate test
+#        uses: ./.github/validation
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: step
+        run: echo 1
 
-      - name: validate test
-        uses: ./.github/validation
+  job3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: step
+        run: echo 1
+
+  job4:
+    runs-on: ubuntu-latest
+    steps:
+      - name: step
+        run: echo 1
+
+  job-final:
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: step
+        run: echo 1
