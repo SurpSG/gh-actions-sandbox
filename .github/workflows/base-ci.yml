@@ -11,7 +11,7 @@ jobs:
       - name: all jobs
         run: |
           echo '${{ toJSON(github.workflow) }}'
-          echo '${{ toJSON(github.workflow.jobs) }}'
+          echo '${{ toJSON(github.jobs) }}'
 
   next-job:
     runs-on: ubuntu-latest
