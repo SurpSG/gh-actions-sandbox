@@ -10,8 +10,8 @@ jobs:
     steps:
       - name: all jobs
         run: |
-          echo '${{ toJSON(workflow) }}'
-          echo '${{ toJSON(workflow.jobs) }}'
+          echo '${{ toJSON(github.workflow) }}'
+          echo '${{ toJSON(github.workflow.jobs) }}'
 
   next-job:
     runs-on: ubuntu-latest
