@@ -18,7 +18,7 @@ jobs:
     needs: build-and-check
     steps:
       - name: all jobs
-        run: echo '${{ toJSON(jobs) }}'
+        run: echo 1
 
       - name: all needs
-        run: echo '${{ toJSON(needs) }}'
+        run: echo 2
