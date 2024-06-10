@@ -12,12 +12,8 @@ jobs:
 
 #  check-main:
 #    uses: ./.github/workflows/base-ci.yml
-  create-release:
+  job1:
     runs-on: ubuntu-latest
     steps:
-
-      - name: Clone project
-        uses: actions/checkout@v3
-
-      - name: validate test
-        uses: ./.github/validation
+      - name: step
+        uses: ./.github/action-composite

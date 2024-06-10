@@ -7,6 +7,17 @@ on:
 
 jobs:
 
+  another:
+    runs-on: ubuntu-latest
+    steps:
+    - name: pr
+      if: ${{ github.event.pull_request }}
+      run: echo 'pull_request'
+
+    - name: wc
+      if: ${{ github.event.workflow_call }}
+      run: echo 'workflow_call'
+
   build-and-test:
     uses: ./.github/workflows/base-ci.yml
     permissions:
