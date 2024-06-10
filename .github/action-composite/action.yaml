@@ -4,6 +4,7 @@ inputs:
   some:
     description: 'smtng'
     required: true
+    default: '<NOT-PROVIDED-ACTOR>'
 
 
 runs:
