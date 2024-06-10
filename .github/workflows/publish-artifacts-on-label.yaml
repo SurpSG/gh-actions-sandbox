@@ -1,0 +1,29 @@
+name: Publish
+
+on:
+  pull_request:
+    types: [ labeled ]
+    branches:
+      - '*'
+
+jobs:
+
+  publish-on-label:
+    if: ${{ github.event.label.name == 'publish-artifacts' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Aza
+        run: ls .
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: publish-artifacts
+          client-payload: '{"github": ${{ toJson(github) }}}'
+
+#      - name: Repository Dispatch
+#        uses: peter-evans/repository-dispatch@v3
+#        with:
+#          event-type: my-event
+#          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
