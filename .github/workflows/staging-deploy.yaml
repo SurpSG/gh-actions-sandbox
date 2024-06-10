@@ -1,0 +1,24 @@
+name: Staging Deploy
+run-name: Deploy by ${{ github.event.inputs.actor || github.actor }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      actor:
+        description: '11'
+        default: ''
+        required: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: ssss
+        env:
+          ACTOR: ${{ github.event.inputs.actor || github.actor }}
+        run: | 
+          echo 'ACTOR: ${{ ACTOR }}' || echo 'env.ACTOR: ${{ envACTOR }}' || echo 'no env'
+          echo 'both: ${{ github.event.inputs.actor || github.actor }}'
+          echo 'github.event.inputs.actor: ${{ github.event.inputs.actor }}'
+          echo 'github.actor: ${{ github.actor }}'
