@@ -16,31 +16,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: step
-        run: echo 1
-
-#      - name: validate test
-#        uses: ./.github/validation
-  job2:
-    runs-on: ubuntu-latest
-    steps:
-      - name: step
-        run: echo 1
-
-  job3:
-    runs-on: ubuntu-latest
-    steps:
-      - name: step
-        run: echo 1
-
-  job4:
-    runs-on: ubuntu-latest
-    steps:
-      - name: step
-        run: echo 1
-
-  job-final:
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: step
-        run: echo 1
+        uses: ./.github/action-composite
