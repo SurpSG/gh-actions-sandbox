@@ -10,3 +10,9 @@ jobs:
 
   check-main:
     uses: ./.github/workflows/base-ci.yml
+
+  job-final:
+    runs-on: ubuntu-latest
+    steps:
+      - name: call composite action with required arg
+        uses: ./.github/action-composite
