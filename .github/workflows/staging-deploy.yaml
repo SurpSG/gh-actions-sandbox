@@ -22,4 +22,4 @@ jobs:
         env:
           ACTOR: ${{ github.event.inputs.actor || github.actor }}
         with:
-          some: $ACTOR
+          some: ${{ env.ACTOR }}
