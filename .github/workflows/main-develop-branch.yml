@@ -19,3 +19,5 @@ jobs:
 
       - name: call composite action with required arg
         uses: ./.github/action-composite
+        with:
+          some: aza
