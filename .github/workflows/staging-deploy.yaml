@@ -18,7 +18,7 @@ jobs:
         env:
           ACTOR: ${{ github.event.inputs.actor || github.actor }}
         run: | 
-          echo 'ACTOR: ${{ ACTOR }}' || echo 'env.ACTOR: ${{ envACTOR }}' || echo 'no env'
+          echo "ACTOR: $ACTOR" || echo 'env.ACTOR: ${{ env.ACTOR }}' || echo 'no env'
           echo 'both: ${{ github.event.inputs.actor || github.actor }}'
           echo 'github.event.inputs.actor: ${{ github.event.inputs.actor }}'
           echo 'github.actor: ${{ github.actor }}'
